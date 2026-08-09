@@ -7,7 +7,6 @@ if (savedtasks) {
     arr = JSON.parse(savedtasks);
 }
 
-
 const addtast = document.getElementById("addtask");
 
 // Function to renumber tasks
@@ -28,23 +27,37 @@ function renumberTasks() {
     }
 }
 
-function updatetask(){
-    const tasktotal=document.getElementById("totaltask");
-    const totaltask=arr.length;
-    tasktotal.textContent=`Total task: ${totaltask}`;
+function updatetask() {
+    const tasktotal = document.getElementById("totaltask");
+    const totaltask = arr.length;
+
+    tasktotal.textContent = `Total task: ${totaltask}`;
 }
 
-function updateemptymessage(){
-    const msg=document.getElementById("emptystg");
-    if(arr.length===0)
-        msg.style.display="block";
-    else 
-        msg.style.display="none";
+function updateemptymessage() {
+    const msg = document.getElementById("emptystg");
+
+    if (arr.length === 0)
+        msg.style.display = "block";
+    else
+        msg.style.display = "none";
 }
+
 function savetolocalstorage() {
     localStorage.setItem("tasks", JSON.stringify(arr));
 }
 
+function updatecompletedtask() {
+    const completedtasks = arr.filter(task => task.completed === true);
+    const completedcount = completedtasks.length;
+
+    const completetask = document.getElementById("completedtasks");
+
+    completetask.textContent = `Completed: ${completedcount}`;
+}
+
+
+// ADD TASK
 addtast.addEventListener('click', () => {
 
     const subvalue = document.getElementById("subject");
@@ -66,13 +79,16 @@ addtast.addEventListener('click', () => {
         subject: subject,
         duration: duration,
         priority: priority,
+        completed: false
     };
 
     // Store in array
     arr.push(tasks);
+
     savetolocalstorage();
     updatetask();
     updateemptymessage();
+    updatecompletedtask();
 
     const tasknumber = arr.length;
 
@@ -81,36 +97,48 @@ addtast.addEventListener('click', () => {
 
     // Create task div
     const newdiv = document.createElement("div");
-    newdiv.textContent = `${tasknumber}. | ${subject} | ${duration} | ${priority} `;
+    newdiv.textContent =
+        `${tasknumber}. | ${subject} | ${duration} | ${priority} `;
 
     const container = document.getElementById("Taskcontainer");
 
-    // Create delete button
+    // Delete button
     const deletebutton = document.createElement("button");
     deletebutton.textContent = "Delete";
-    const completebutton=document.createElement("button");
-    completebutton.textContent="Complete";
+
+    // Complete button
+    const completebutton = document.createElement("button");
+    completebutton.textContent = "Complete";
 
 
-
-    //complete button
+    // COMPLETE BUTTON
     completebutton.addEventListener('click', () => {
 
-    if (newdiv.style.textDecoration === "line-through") {
-        // Undo
-        newdiv.style.textDecoration = "none";
-        newdiv.style.color = "black";
-        completebutton.textContent = "Complete";
-    }
-    else {
-        // Mark complete
-        newdiv.style.textDecoration = "line-through";
-        newdiv.style.color = "gray";
-        completebutton.textContent = "Undo";
-    }
-});
+        if (newdiv.style.textDecoration === "line-through") {
 
-    // Delete functionality
+            // Undo
+            newdiv.style.textDecoration = "none";
+            newdiv.style.color = "black";
+            completebutton.textContent = "Complete";
+
+            tasks.completed = false;
+
+        } else {
+
+            // Mark complete
+            newdiv.style.textDecoration = "line-through";
+            newdiv.style.color = "gray";
+            completebutton.textContent = "Undo";
+
+            tasks.completed = true;
+        }
+
+        savetolocalstorage();
+        updatecompletedtask();
+    });
+
+
+    // DELETE BUTTON
     deletebutton.addEventListener('click', () => {
 
         const index = arr.findIndex(item => item === tasks);
@@ -123,16 +151,18 @@ addtast.addEventListener('click', () => {
         // Remove task from webpage
         newdiv.remove();
 
-
         // Renumber remaining tasks
         renumberTasks();
+
         updatetask();
         updateemptymessage();
+        updatecompletedtask();
 
         console.log(arr);
     });
 
-    // Put button inside task div
+
+    // Put buttons inside task div
     newdiv.appendChild(completebutton);
     newdiv.appendChild(deletebutton);
 
@@ -145,50 +175,91 @@ addtast.addEventListener('click', () => {
     prioritytask.value = "Low";
 });
 
-const clearbutton=document.getElementById("Clearall");
-clearbutton.addEventListener('click', ()=>{
-    const container=document.getElementById("Taskcontainer");
-    container.innerHTML="";
-    arr=[];
+
+// CLEAR ALL
+const clearbutton = document.getElementById("Clearall");
+
+clearbutton.addEventListener('click', () => {
+
+    const container = document.getElementById("Taskcontainer");
+
+    container.innerHTML = "";
+
+    arr = [];
+
     console.log(arr);
+
     updatetask();
     updateemptymessage();
     savetolocalstorage();
-
+    updatecompletedtask();
 });
-// Run when page loads
+
+
+// RUN WHEN PAGE LOADS
 updatetask();
 updateemptymessage();
+updatecompletedtask();
 
-// Run when page loads
-updatetask();
-updateemptymessage();
 
+// DISPLAY SAVED TASKS
 arr.forEach((task, index) => {
+
     const newdiv = document.createElement("div");
-    newdiv.textContent = `${index + 1}. | ${task.subject} | ${task.duration} | ${task.priority} `;
+
+    newdiv.textContent =
+        `${index + 1}. | ${task.subject} | ${task.duration} | ${task.priority} `;
+
 
     // Complete button
     const completebutton = document.createElement("button");
     completebutton.textContent = "Complete";
 
+
+    // RESTORE COMPLETED STATE
+    if (task.completed === true) {
+
+        newdiv.style.textDecoration = "line-through";
+        newdiv.style.color = "gray";
+        completebutton.textContent = "Undo";
+    }
+
+
+    // COMPLETE BUTTON
     completebutton.addEventListener('click', () => {
+
         if (newdiv.style.textDecoration === "line-through") {
+
+            // Undo
             newdiv.style.textDecoration = "none";
             newdiv.style.color = "black";
             completebutton.textContent = "Complete";
+
+            task.completed = false;
+
         } else {
+
+            // Mark complete
             newdiv.style.textDecoration = "line-through";
             newdiv.style.color = "gray";
             completebutton.textContent = "Undo";
+
+            task.completed = true;
         }
+
+        savetolocalstorage();
+        updatecompletedtask();
     });
+
 
     // Delete button
     const deletebutton = document.createElement("button");
     deletebutton.textContent = "Delete";
 
+
+    // DELETE BUTTON
     deletebutton.addEventListener('click', () => {
+
         const taskIndex = arr.findIndex(item =>
             item.subject === task.subject &&
             item.duration === task.duration &&
@@ -201,10 +272,13 @@ arr.forEach((task, index) => {
         }
 
         newdiv.remove();
+
         renumberTasks();
         updatetask();
         updateemptymessage();
+        updatecompletedtask();
     });
+
 
     newdiv.appendChild(completebutton);
     newdiv.appendChild(deletebutton);
