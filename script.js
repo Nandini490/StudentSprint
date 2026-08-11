@@ -52,6 +52,7 @@ function updatecompletedtask() {
     const completedcount = completedtasks.length;
 
     const completetask = document.getElementById("completedtasks");
+    
 
     completetask.textContent = `Completed: ${completedcount}`;
 }
@@ -97,6 +98,7 @@ addtast.addEventListener('click', () => {
 
     // Create task div
     const newdiv = document.createElement("div");
+    newdiv.className="task-card";
     newdiv.textContent =
         `${tasknumber}. | ${subject} | ${duration} | ${priority} `;
 
@@ -104,10 +106,12 @@ addtast.addEventListener('click', () => {
 
     // Delete button
     const deletebutton = document.createElement("button");
+    deletebutton.className="delete-btn";
     deletebutton.textContent = "Delete";
 
     // Complete button
     const completebutton = document.createElement("button");
+    completebutton.className="complete-btn";
     completebutton.textContent = "Complete";
 
 
@@ -206,6 +210,7 @@ updatecompletedtask();
 arr.forEach((task, index) => {
 
     const newdiv = document.createElement("div");
+    newdiv.className="task-card";
 
     newdiv.textContent =
         `${index + 1}. | ${task.subject} | ${task.duration} | ${task.priority} `;
@@ -213,6 +218,7 @@ arr.forEach((task, index) => {
 
     // Complete button
     const completebutton = document.createElement("button");
+    completebutton.className="complete-btn";
     completebutton.textContent = "Complete";
 
 
@@ -254,6 +260,7 @@ arr.forEach((task, index) => {
 
     // Delete button
     const deletebutton = document.createElement("button");
+    deletebutton.className="delete-btn";
     deletebutton.textContent = "Delete";
 
 

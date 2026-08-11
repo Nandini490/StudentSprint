@@ -8,9 +8,10 @@
 </head>
 <body>
     
-    <h1>Student Sprint</h1>
-   
-     <input type="text" placeholder="Enter subject" id="subject">
+    <h1 id="heading">Student Sprint</h1>
+    <p id="description">Plan your study. Track your progress.</p>
+    <div id="addtaskbutton">
+         <input type="text" placeholder="Enter subject" id="subject">
      <br>
      <input type="number" placeholder="duration" id="duration">
      <br>
@@ -20,13 +21,17 @@
         <option value="high">High</option>
      </select>
      <br>
-     <button type="submit" id="addtask">Submit</button>
+     <button type="submit" id="addtask">Add Task</button>
      <br>
-     
+    </div>
+   
+    
+     <section id="statistics">
+        <div id="totaltask"> <h3 >Total task: 0</h3></div>
+        <div id="completedtasks"><h3 >Completed:0</h3></div> 
+     </section>
      
      <div id="Taskcontainer"></div>
-     <h3 id="totaltask">Total task: 0</h3>
-     <h3 id="completedtasks">Completed:0</h3>
       <p id="emptystg">No Task Available</p>
      <button id="Clearall">Clear All</button>
     

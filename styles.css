@@ -1,0 +1,105 @@
+body{
+
+    background-color: powderblue;
+    margin: 0;
+    padding: 0;
+    min-height: 100vh;
+}
+*{
+    margin: 0;
+}
+#description{
+    text-align: center;
+    color: #1F2937;
+    padding: 30px;
+
+}
+#heading{
+   text-align: center;
+   padding: 20px;
+}
+#addtaskbutton{
+   
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: #FFFFFF;
+    justify-content: center;
+    width: 250px;
+    margin: 0 auto;
+}
+#subject{
+    width: 200px;
+    border-radius: 10px;
+    padding: 10px;
+    margin-top: 10px;
+    border-color: black;
+}
+#duration{
+    width: 200px;
+    border-radius: 10px;
+    margin-top: 10px;
+    border-color: black;
+    padding: 10px;
+}
+#priority{
+    width: 200px;
+    border-radius: 10px;
+    margin-top: 10px;
+    border-color: black;
+    padding: 10px;
+
+}
+#addtask{
+    background-color: rgb(138, 201, 138);
+    border-radius: 5px;
+    padding: 5px;
+}
+#addtask:hover{
+    background-color: #5FAF5F;
+}
+#statistics{
+    display: flex;
+    flex-direction: row;
+    padding: 20px;
+    padding-top: 50px;
+    align-items: center;
+    justify-content: space-around;
+}
+#totaltask,#completedtasks
+{
+    width: 120px;
+    height: 50px;
+    background-color: #5FAF5F;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#Taskcontainer{
+    width: 500px;
+    margin: 0 auto;
+}
+.task-card{
+    background-color: #FFFFFF;
+    padding: 15px;
+    margin-bottom: 10px;
+    border: 1px solid black;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    box-sizing: border-box;
+}
+.complete-btn
+{
+    background-color: rgb(145, 193, 145);
+    width: 100px;
+    border-radius: 5px;
+}
+.delete-btn
+{
+    background-color: rgb(184, 116, 116);
+    width: 100px;
+    border-radius: 5px;
+}
